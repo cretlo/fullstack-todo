@@ -25,15 +25,3 @@ export default function AddTodo({ text, onChange, addTodo }: Props) {
     </form>
   );
 }
-//<div classNameNameName="input-group mb-3">
-//  <div classNameNameName="input-group-prepend">
-//    <span classNameNameName="input-group-text rounded-left text-primary">
-//      Hello
-//    </span>
-//  </div>
-//  <input
-//    type="text"
-//    classNameNameName="form-control"
-//    aria-label="Amount (to the nearest dollar)"
-//  />
-//</div>
