@@ -1,0 +1,15 @@
+//$primary: green;
+//$secondary: red;
+
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+.rounded-left {
+  border-top-left-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.ease {
+  transition: all 1s ease;
+}
