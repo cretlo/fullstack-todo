@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1690136910403,
+      "tag": "0000_aromatic_vector",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1690138385856,
+      "tag": "0001_regular_justin_hammer",
+      "breakpoints": true
+    }
+  ]
+}

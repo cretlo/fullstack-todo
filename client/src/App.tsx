@@ -24,11 +24,11 @@ function App() {
       return;
     }
 
-    let nextTodo = {
+    const nextTodo = {
       id: todoCount++,
       description: todoText,
     };
-    let nextTodos = todos.map((todo) => {
+    const nextTodos = todos.map((todo) => {
       return { ...todo };
     });
     nextTodos.push(nextTodo);

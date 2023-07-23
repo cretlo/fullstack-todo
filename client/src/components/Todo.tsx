@@ -53,7 +53,7 @@ export default function Todo({
           ref={inputRef}
           type="text"
           value={description}
-          className="form-control bg-light text-black"
+          className="form-control bg-light text-black text-wrap"
           aria-label="Text input with checkbox"
           onChange={(e) => setDescription(e.target.value)}
           onKeyDownCapture={(e) => (e.key === "Enter" ? handleSave() : null)}
