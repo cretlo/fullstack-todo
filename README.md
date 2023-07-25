@@ -3,6 +3,7 @@
 Tech stack:
 
 - NodeJS
+- Typescript
 - Express
 - PostgreSQL
 - DrizzleORM
