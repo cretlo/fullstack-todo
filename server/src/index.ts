@@ -5,7 +5,7 @@ import express from "express";
 import cors from "cors";
 
 import { NewTodo, todos } from "./db/schema";
-import { eq, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
 async function main() {
   const connectionURI = "postgres://postgres:postgres@localhost:5432/todo";
@@ -23,7 +23,7 @@ async function main() {
   const pool = new Pool({
     connectionString: connectionURI,
   });
-  const db = drizzle(pool, { logger: true });
+  const db = drizzle(pool);
 
   /* ################ Express endpoints ################ */
   const app = express();
@@ -54,6 +54,7 @@ async function main() {
 
     const newTodo: NewTodo = {};
     newTodo.description = req.body.description;
+    newTodo.completed = req.body.completed;
     newTodo.updatedAt = new Date();
 
     const updatedTodo = await db

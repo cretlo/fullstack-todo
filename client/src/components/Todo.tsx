@@ -4,23 +4,25 @@ import { flushSync } from "react-dom";
 
 interface Props {
   initialDescription: string;
+  completed: boolean;
   onDeleteTodo: () => void;
-  handleUpdateTodo: (newDescription: string) => void;
+  handleUpdateTodo: (newDescription: string, completed: boolean) => void;
 }
 
 export default function Todo({
   initialDescription,
+  completed,
   onDeleteTodo,
   handleUpdateTodo,
 }: Props) {
   const [isEditing, setIsEditing] = useState(false);
-  const [isTaskComplete, setIsTaskComplete] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(completed);
   const [description, setDescription] = useState(initialDescription);
   const inputRef = useRef<HTMLInputElement>(null);
 
   function handleSave() {
     setIsEditing(!isEditing);
-    handleUpdateTodo(description);
+    handleUpdateTodo(description, isCompleted);
   }
 
   function handleEditClick() {
@@ -33,6 +35,11 @@ export default function Todo({
     inputRef.current?.focus();
   }
 
+  function handleCompletion() {
+    setIsCompleted(!isCompleted);
+    handleUpdateTodo(description, !isCompleted);
+  }
+
   return (
     <div className="input-group mb-3">
       <div className="input-group-text">
@@ -40,12 +47,12 @@ export default function Todo({
           className="form-check-input mt-0"
           type="checkbox"
           aria-label="Checkbox for following text input"
-          checked={isTaskComplete}
-          onChange={() => setIsTaskComplete(!isTaskComplete)}
+          checked={isCompleted}
+          onChange={handleCompletion}
         />
       </div>
 
-      {isTaskComplete && !isEditing ? (
+      {isCompleted && !isEditing ? (
         <del className="form-control">{description}</del>
       ) : (
         <input
