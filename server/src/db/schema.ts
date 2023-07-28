@@ -9,7 +9,7 @@ import { InferModel } from "drizzle-orm";
 
 export const todos = pgTable("todos", {
   id: serial("id").primaryKey(),
-  description: varchar("description", { length: 256 }),
+  text: varchar("text", { length: 256 }),
   completed: boolean("completed").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()

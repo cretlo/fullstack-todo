@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "8228c839-faa0-4e51-83bf-1e4ea6829132",
-  "prevId": "aab6294a-31a3-4f5a-8b1a-ce47cb53b907",
+  "id": "3cee5c77-79e3-436b-a021-4ee619291bcb",
+  "prevId": "8228c839-faa0-4e51-83bf-1e4ea6829132",
   "tables": {
     "todos": {
       "name": "todos",
@@ -14,8 +14,8 @@
           "primaryKey": true,
           "notNull": true
         },
-        "description": {
-          "name": "description",
+        "text": {
+          "name": "text",
           "type": "varchar(256)",
           "primaryKey": false,
           "notNull": false
@@ -53,6 +53,8 @@
   "_meta": {
     "schemas": {},
     "tables": {},
-    "columns": {}
+    "columns": {
+      "\"todos\".\"description\"": "\"todos\".\"text\""
+    }
   }
 }

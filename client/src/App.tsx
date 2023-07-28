@@ -1,20 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
+import { Todo as TodoType } from "./types";
 import AddTodo from "./components/AddTodo";
-import Todo from "./components/Todo";
 import axios from "axios";
+import TodoList from "./components/TodoList";
+import { todoReducer } from "./reducers/todoReducer";
 
-interface Todo {
-  id: number;
-  description: string;
-  completed: boolean;
-  createAt?: string;
-  updateAt?: string;
-}
+//const initalState: TodoType[] = [
+//  {
+//    id: 0,
+//    text: "hello",
+//    completed: false,
+//  },
+//];
 
 const App = () => {
   const [todoText, setTodoText] = useState("");
-  const [todos, setTodos] = useState<Todo[] | []>([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [todos, dispatch] = useReducer(todoReducer, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -22,9 +25,12 @@ const App = () => {
     let fetchData = async () => {
       try {
         const result = await axios.get("http://localhost:4000/todos");
-        const data = result.data;
+        const data: TodoType[] = result.data;
 
-        setTodos(data);
+        dispatch({
+          type: "fetch_todos",
+          payload: data,
+        });
         setIsLoading(false);
       } catch (err) {
         console.error(err);
@@ -42,16 +48,14 @@ const App = () => {
     }
 
     const result = await axios.post("http://localhost:4000/todos", {
-      description: todoText,
+      text: todoText,
     });
-    const nextTodo: Todo = result.data;
+    const nextTodo: TodoType = result.data;
 
-    const nextTodos = todos.map((todo) => {
-      return { ...todo };
+    dispatch({
+      type: "added_todo",
+      payload: nextTodo,
     });
-    nextTodos.push(nextTodo);
-
-    setTodos(nextTodos);
     setTodoText("");
   }
 
@@ -59,33 +63,31 @@ const App = () => {
     try {
       await axios.delete(`http://localhost:4000/todos/${id}`);
 
-      setTodos(todos.filter((todo) => todo.id !== id));
+      dispatch({
+        type: "deleted_todo",
+        payload: {
+          id: id,
+          text: "",
+          completed: false,
+        },
+      });
     } catch (err) {
       console.error(err);
     }
   }
 
-  async function handleUpdateTodo(
-    id: number,
-    newDescription: string,
-    completed: boolean,
-  ) {
+  async function handleUpdateTodo(todo: TodoType) {
     try {
-      const result = await axios.put(`http://localhost:4000/todos/${id}`, {
-        description: newDescription,
-        completed: completed,
+      const result = await axios.put(`http://localhost:4000/todos/${todo.id}`, {
+        text: todo.text,
+        completed: todo.completed,
       });
-      const data = result.data;
+      const data: TodoType = result.data;
 
-      setTodos(
-        todos.map((todo) => {
-          if (todo.id === id) {
-            return data;
-          }
-
-          return todo;
-        }),
-      );
+      dispatch({
+        type: "updated_todo",
+        payload: data,
+      });
     } catch (err) {
       console.error(err);
     }
@@ -94,43 +96,14 @@ const App = () => {
   return (
     <div className="container">
       <h1 className="text-center mt-5">To-Do</h1>
-      <div className="row my-5">
-        <div className="col-6 offset-3">
-          <AddTodo
-            text={todoText}
-            addTodo={handleAddTodo}
-            onChange={setTodoText}
-          />
-        </div>
-      </div>
-
+      <AddTodo text={todoText} addTodo={handleAddTodo} onChange={setTodoText} />
       <hr />
-
-      <div className="row mt-3">
-        {isLoading ? (
-          <div className="d-flex justify-content-center">
-            <div className="spinner-border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
-        ) : (
-          <div className="col-6 offset-3">
-            {todos.map((todo) => {
-              return (
-                <Todo
-                  key={todo.id}
-                  initialDescription={todo.description}
-                  completed={todo.completed}
-                  onDeleteTodo={() => handleDeleteTodo(todo.id)}
-                  handleUpdateTodo={(description, completed) =>
-                    handleUpdateTodo(todo.id, description, completed)
-                  }
-                />
-              );
-            })}
-          </div>
-        )}
-      </div>
+      <TodoList
+        todos={todos}
+        isLoading={isLoading}
+        onDeleteTodo={handleDeleteTodo}
+        onUpdateTodo={handleUpdateTodo}
+      />
     </div>
   );
 };

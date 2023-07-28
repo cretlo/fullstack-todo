@@ -29,6 +29,13 @@
       "when": 1690254419699,
       "tag": "0004_strong_moira_mactaggert",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1690510206621,
+      "tag": "0004_clear_hairball",
+      "breakpoints": true
     }
   ]
 }

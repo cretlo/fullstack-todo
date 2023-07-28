@@ -1,28 +1,21 @@
 import { useState, useRef } from "react";
-
+import { Todo as TodoType } from "../types";
 import { flushSync } from "react-dom";
 
 interface Props {
-  initialDescription: string;
-  completed: boolean;
-  onDeleteTodo: () => void;
-  handleUpdateTodo: (newDescription: string, completed: boolean) => void;
+  todo: TodoType;
+  onDeleteTodo: (id: number) => void;
+  onUpdateTodo: (todo: TodoType) => void;
 }
 
-export default function Todo({
-  initialDescription,
-  completed,
-  onDeleteTodo,
-  handleUpdateTodo,
-}: Props) {
+export default function Todo({ todo, onDeleteTodo, onUpdateTodo }: Props) {
   const [isEditing, setIsEditing] = useState(false);
-  const [isCompleted, setIsCompleted] = useState(completed);
-  const [description, setDescription] = useState(initialDescription);
+  const [text, setText] = useState(todo.text);
   const inputRef = useRef<HTMLInputElement>(null);
 
   function handleSave() {
     setIsEditing(!isEditing);
-    handleUpdateTodo(description, isCompleted);
+    onUpdateTodo({ ...todo, text: text });
   }
 
   function handleEditClick() {
@@ -35,11 +28,6 @@ export default function Todo({
     inputRef.current?.focus();
   }
 
-  function handleCompletion() {
-    setIsCompleted(!isCompleted);
-    handleUpdateTodo(description, !isCompleted);
-  }
-
   return (
     <div className="input-group mb-3">
       <div className="input-group-text">
@@ -47,22 +35,22 @@ export default function Todo({
           className="form-check-input mt-0"
           type="checkbox"
           aria-label="Checkbox for following text input"
-          checked={isCompleted}
-          onChange={handleCompletion}
+          checked={todo.completed}
+          onChange={() => onUpdateTodo({ ...todo, completed: !todo.completed })}
         />
       </div>
 
-      {isCompleted && !isEditing ? (
-        <del className="form-control">{description}</del>
+      {todo.completed && !isEditing ? (
+        <del className="form-control">{text}</del>
       ) : (
         <input
           disabled={!isEditing}
           ref={inputRef}
           type="text"
-          value={description}
+          value={text}
           className="form-control bg-light text-black text-wrap"
           aria-label="Text input with checkbox"
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e) => setText(e.target.value)}
           onKeyDownCapture={(e) => (e.key === "Enter" ? handleSave() : null)}
         />
       )}
@@ -96,7 +84,7 @@ export default function Todo({
           <button
             className="btn btn-outline-secondary"
             type="button"
-            onClick={() => onDeleteTodo()}
+            onClick={() => onDeleteTodo(todo.id)}
           >
             Delete
           </button>

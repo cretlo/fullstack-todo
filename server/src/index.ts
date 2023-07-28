@@ -41,7 +41,7 @@ async function main() {
     console.log("Inserting new todo...");
 
     const newTodo: NewTodo = {};
-    newTodo.description = req.body.description;
+    newTodo.text = req.body.text;
 
     const insertedTodo = await db.insert(todos).values(newTodo).returning();
 
@@ -53,7 +53,7 @@ async function main() {
     const todoId = Number(req.params.id);
 
     const newTodo: NewTodo = {};
-    newTodo.description = req.body.description;
+    newTodo.text = req.body.text;
     newTodo.completed = req.body.completed;
     newTodo.updatedAt = new Date();
 
