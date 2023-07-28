@@ -27,7 +27,17 @@ type FetchAction = {
   payload: Todo[];
 };
 
-type TodoAction = AddedAction | DeletedAction | UpdatedAction | FetchAction;
+type FilteredAction = {
+  type: "filtered_todos";
+  payload: Todo[];
+};
+
+type TodoAction =
+  | AddedAction
+  | DeletedAction
+  | UpdatedAction
+  | FetchAction
+  | FilteredAction;
 
 //type TodoAction = {
 //  type: string;

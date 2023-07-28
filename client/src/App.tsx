@@ -4,6 +4,7 @@ import AddTodo from "./components/AddTodo";
 import axios from "axios";
 import TodoList from "./components/TodoList";
 import { todoReducer } from "./reducers/todoReducer";
+import FilterTodos from "./components/FilterTodos";
 
 //const initalState: TodoType[] = [
 //  {
@@ -16,7 +17,7 @@ import { todoReducer } from "./reducers/todoReducer";
 const App = () => {
   const [todoText, setTodoText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  const [filter, setFilter] = useState("All");
   const [todos, dispatch] = useReducer(todoReducer, []);
 
   useEffect(() => {
@@ -78,7 +79,7 @@ const App = () => {
         text: todo.text,
         completed: todo.completed,
       });
-      const data: TodoType = result.data;
+      const data = result.data;
 
       dispatch({
         type: "updated_todo",
@@ -90,16 +91,18 @@ const App = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container-md">
       <h1 className="text-center mt-5">To-Do</h1>
       <AddTodo
         text={todoText}
         onSubmit={handleAddTodo}
         onChange={setTodoText}
       />
+      <FilterTodos handleFilter={setFilter} filter={filter} />
       <hr />
       <TodoList
         todos={todos}
+        filter={filter}
         isLoading={isLoading}
         onDeleteTodo={handleDeleteTodo}
         onUpdateTodo={handleUpdateTodo}
