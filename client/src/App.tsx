@@ -65,11 +65,7 @@ const App = () => {
 
       dispatch({
         type: "deleted_todo",
-        payload: {
-          id: id,
-          text: "",
-          completed: false,
-        },
+        payload: id,
       });
     } catch (err) {
       console.error(err);
@@ -96,7 +92,11 @@ const App = () => {
   return (
     <div className="container">
       <h1 className="text-center mt-5">To-Do</h1>
-      <AddTodo text={todoText} addTodo={handleAddTodo} onChange={setTodoText} />
+      <AddTodo
+        text={todoText}
+        onSubmit={handleAddTodo}
+        onChange={setTodoText}
+      />
       <hr />
       <TodoList
         todos={todos}

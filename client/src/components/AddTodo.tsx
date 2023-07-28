@@ -1,14 +1,14 @@
 interface Props {
   text: string;
   onChange: (e: string) => void;
-  addTodo: (e: React.FormEvent) => void;
+  onSubmit: (e: React.FormEvent) => void;
 }
 
-export default function AddTodo({ text, onChange, addTodo }: Props) {
+export default function AddTodo({ text, onChange, onSubmit }: Props) {
   return (
     <div className="row my-5">
       <div className="col-6 offset-3">
-        <form onSubmit={addTodo}>
+        <form onSubmit={onSubmit}>
           <div className="input-group">
             <input
               type="text"
@@ -16,11 +16,7 @@ export default function AddTodo({ text, onChange, addTodo }: Props) {
               onChange={(e) => onChange(e.target.value)}
               value={text}
             />
-            <button
-              type="submit"
-              className="btn btn-outline-secondary"
-              onClick={addTodo}
-            >
+            <button type="submit" className="btn btn-outline-secondary">
               Add
             </button>
           </div>
