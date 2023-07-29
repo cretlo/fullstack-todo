@@ -9,10 +9,8 @@ const FilterTodos = ({ filter, handleFilter }: Props) => {
   const btnCompletedClass =
     filter === "Completed" ? "active btn-secondary" : "";
 
-  function handleClick(e: React.MouseEvent) {
-    const button = e.target as HTMLButtonElement;
-
-    switch (button.firstChild?.textContent) {
+  function handleClick(e: React.FormEvent<HTMLButtonElement>) {
+    switch (e.currentTarget.firstChild?.textContent) {
       case "All":
         handleFilter("All");
         break;
