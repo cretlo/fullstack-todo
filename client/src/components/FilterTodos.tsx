@@ -4,6 +4,11 @@ interface Props {
 }
 
 const FilterTodos = ({ filter, handleFilter }: Props) => {
+  const btnAllClass = filter === "All" ? "active btn-secondary" : "";
+  const btnActiveClass = filter === "Active" ? "active btn-secondary" : "";
+  const btnCompletedClass =
+    filter === "Completed" ? "active btn-secondary" : "";
+
   function handleClick(e: React.MouseEvent) {
     const button = e.target as HTMLButtonElement;
 
@@ -24,21 +29,21 @@ const FilterTodos = ({ filter, handleFilter }: Props) => {
     <div className="btn-group d-flex felx-row-reverse">
       <button
         type="button"
-        className={`btn ${filter === "All" && "active btn-secondary"}`}
+        className={`btn ${btnAllClass}`}
         onClick={handleClick}
       >
         All
       </button>
       <button
         type="button"
-        className={`btn ${filter === "Active" && "active btn-secondary"}`}
+        className={`btn ${btnActiveClass}`}
         onClick={handleClick}
       >
         Active
       </button>
       <button
         type="button"
-        className={`btn ${filter === "Completed" && "active btn-secondary"}`}
+        className={`btn ${btnCompletedClass}`}
         onClick={handleClick}
       >
         Completed

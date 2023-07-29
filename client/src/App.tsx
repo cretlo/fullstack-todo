@@ -23,10 +23,10 @@ const App = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    let fetchData = async () => {
+    const fetchData = async (): Promise<void> => {
       try {
         const result = await axios.get("http://localhost:4000/todos");
-        const data: TodoType[] = result.data;
+        const data = result.data as TodoType[];
 
         dispatch({
           type: "fetch_todos",
@@ -41,7 +41,7 @@ const App = () => {
     fetchData();
   }, []);
 
-  async function handleAddTodo(e: React.FormEvent) {
+  async function handleAddTodo(e: React.FormEvent): Promise<void> {
     e.preventDefault();
 
     if (todoText.length < 1) {
@@ -51,7 +51,7 @@ const App = () => {
     const result = await axios.post("http://localhost:4000/todos", {
       text: todoText,
     });
-    const nextTodo: TodoType = result.data;
+    const nextTodo = result.data as TodoType;
 
     dispatch({
       type: "added_todo",
@@ -60,7 +60,7 @@ const App = () => {
     setTodoText("");
   }
 
-  async function handleDeleteTodo(id: number) {
+  async function handleDeleteTodo(id: number): Promise<void> {
     try {
       await axios.delete(`http://localhost:4000/todos/${id}`);
 
@@ -73,13 +73,13 @@ const App = () => {
     }
   }
 
-  async function handleUpdateTodo(todo: TodoType) {
+  async function handleUpdateTodo(todo: TodoType): Promise<void> {
     try {
       const result = await axios.put(`http://localhost:4000/todos/${todo.id}`, {
         text: todo.text,
         completed: todo.completed,
       });
-      const data = result.data;
+      const data = result.data as TodoType;
 
       dispatch({
         type: "updated_todo",

@@ -15,7 +15,7 @@ const TodoList = ({
   onDeleteTodo,
   onUpdateTodo,
 }: Props) => {
-  let loadingContent = (
+  const loadingContent = (
     <div className="d-flex justify-content-center">
       <div className="spinner-border" role="status">
         <span className="visually-hidden">Loading...</span>
