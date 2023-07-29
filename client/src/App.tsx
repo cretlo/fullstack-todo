@@ -6,14 +6,6 @@ import TodoList from "./components/TodoList";
 import { todoReducer } from "./reducers/todoReducer";
 import FilterTodos from "./components/FilterTodos";
 
-//const initalState: TodoType[] = [
-//  {
-//    id: 0,
-//    text: "hello",
-//    completed: false,
-//  },
-//];
-
 const App = () => {
   const [todoText, setTodoText] = useState("");
   const [isLoading, setIsLoading] = useState(false);

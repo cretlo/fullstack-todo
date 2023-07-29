@@ -4,7 +4,7 @@ interface Props {
   onSubmit: (e: React.FormEvent) => void;
 }
 
-export default function AddTodo({ text, onChange, onSubmit }: Props) {
+const AddTodo = ({ text, onChange, onSubmit }: Props) => {
   return (
     <div className="row my-5">
       <div className="col col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
@@ -24,4 +24,6 @@ export default function AddTodo({ text, onChange, onSubmit }: Props) {
       </div>
     </div>
   );
-}
+};
+
+export default AddTodo;

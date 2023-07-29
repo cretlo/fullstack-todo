@@ -8,7 +8,7 @@ interface Props {
   onUpdateTodo: (todo: TodoType) => void;
 }
 
-export default function Todo({ todo, onDeleteTodo, onUpdateTodo }: Props) {
+const Todo = ({ todo, onDeleteTodo, onUpdateTodo }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(todo.text);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -92,4 +92,6 @@ export default function Todo({ todo, onDeleteTodo, onUpdateTodo }: Props) {
       )}
     </div>
   );
-}
+};
+
+export default Todo;
